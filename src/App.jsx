@@ -35,6 +35,8 @@ const [search, setSearch] = useState("");
 const [sort, setSort] = useState("Newest");
 const [editingExpense, setEditingExpense] = useState(null);
 
+const [isSidebarOpen,setIsSidebarOpen] = useState(false);
+
 useEffect(() => {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }, [expenses]);
@@ -104,17 +106,17 @@ const sortedExpenses = [...searchedExpenses].sort((a, b) => {
 
 return (
   <div className="flex min-h-screen bg-gray-50">
-    {/* Sidebar */}
-    <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+    
+    <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
 
-    {/* Main Content */}
+    
     <main className="flex-1 min-w-0">
-      {/* Navbar */}
-      <Navbar userName={userName} setUserName={setUserName} search={search} setSearch={setSearch} />
+      
+      <Navbar setIsSidebarOpen={setIsSidebarOpen} userName={userName} setUserName={setUserName} search={search} setSearch={setSearch} />
 
-      {/* Content Area */}
+      
       <div className="p-6 space-y-6">
-        {/* Header indicator */}
+       
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-4 border-b border-gray-200">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{activeTab}</h1>
@@ -134,7 +136,7 @@ return (
           </div>
         </div>
 
-        {/* 1. Dashboard View (All-in-one overview) */}
+        
         {activeTab === "Dashboard" && (
           <div className="space-y-6">
             <ExpenseSummary expenses={expenses} />
@@ -166,7 +168,7 @@ return (
           </div>
         )}
 
-        {/* 2. Expenses View (Highlighted focused expense manager) */}
+        
         {activeTab === "Expenses" && (
           <div className="p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm space-y-6">
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -194,7 +196,7 @@ return (
           </div>
         )}
 
-        {/* 3. Analytics View (Highlighted charts & metrics) */}
+        
         {activeTab === "Analytics" && (
           <div className="p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm space-y-6">
             <ExpenseSummary expenses={expenses} />
@@ -202,7 +204,7 @@ return (
           </div>
         )}
 
-        {/* 4. Categories View (Highlighted category filter and list) */}
+        
         {activeTab === "Categories" && (
           <div className="p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm space-y-6">
             <CategoryFilter category={category} setCategory={setCategory} />
@@ -216,7 +218,7 @@ return (
           </div>
         )}
 
-        {/* 5. Settings View */}
+        
         {activeTab === "Settings" && (
           <div className="p-6 bg-white border-2 border-blue-500 rounded-2xl shadow-sm max-w-xl space-y-6">
             <div>
